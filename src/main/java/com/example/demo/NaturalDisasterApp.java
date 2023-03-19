@@ -12,10 +12,10 @@ public class NaturalDisasterApp {
     public static void main(String[] args) {
         OkHttpClient client = new OkHttpClient();
 
+        String url = String.format("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-03-01&endtime=2022-03-06&minmagnitude=5");
         Request request = new Request.Builder()
-                .url("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-03-01&endtime=2022-03-06&minmagnitude=5")
+                .url(url)
                 .build();
-
         try {
             Response response = client.newCall(request).execute();
             String jsonData = response.body().string();

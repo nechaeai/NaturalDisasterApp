@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Earthquake Data</title>
+</head>
+<body>
+    <h1>Earthquake Data for {{ city }}</h1>
+    <form method="post" action="/earthquake">
+        <label for="city">Enter city name:</label>
+        <input type="text" id="city" name="city">
+        <button type="submit">Search</button>
+    </form>
+    <table>
+        <tr>
+            <th>Place</th>
+            <th>Magnitude</th>
+            <th>Time</th>
+        </tr>
+        <tr>
+            <td>{{ feature.getPlace() }}</td>
+            <td>{{ feature.getMag() }}</td>
+            <td>{{ feature.getTime() }}</td>
+        </tr>
+       
+    </table>
