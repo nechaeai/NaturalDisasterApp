@@ -35,7 +35,7 @@ public class EarthquakeController {
     public String getEarthquakeData(@RequestParam String city, Model model) {
         OkHttpClient client = new OkHttpClient();
 
-        String url = String.format("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&place=%s", city);
+        String url = String.format("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&minmagnitude=5&limit=5&orderby=time&eventtype=earthquake&place=" + city.replace(" ", "%20"));
         Request request = new Request.Builder()
                 .url(url)
                 .build();
