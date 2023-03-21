@@ -28,6 +28,7 @@ public class NaturalDisasterApp {
                 JSONObject properties = feature.getJSONObject("properties");
 
                 String place = properties.getString("place");
+
                 double magnitude = properties.getDouble("mag");
                 long time = properties.getLong("time");
 

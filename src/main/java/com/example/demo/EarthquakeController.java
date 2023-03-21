@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Controller
 public class EarthquakeController {
@@ -24,45 +28,55 @@ public class EarthquakeController {
      * @param model the model to populate with the earthquake data
      * @return the name of the HTML template to render
      */
-	
 
-    @GetMapping("/")
-    public String home() {
-        return "home";
+
+
+    @GetMapping("/index")
+    public String index() {
+        return "index";
     }
 	
-    @PostMapping("/earthquake")
-    public String getEarthquakeData(@RequestParam String city, Model model) {
+    @PostMapping("/index")
+    public String getEarthquakeData(@RequestParam String city, Model model) throws URISyntaxException {
         OkHttpClient client = new OkHttpClient();
 
-        String url = String.format("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&minmagnitude=5&limit=5&orderby=time&eventtype=earthquake&place=" + city.replace(" ", "%20"));
+        URI uri = new URI("https", "earthquake.usgs.gov", "/fdsnws/event/1/query",
+                "format=geojson&minmagnitude=5&limit=5&orderby=time&eventtype=earthquake&place=" + 
+                URLEncoder.encode(city, StandardCharsets.UTF_8).replace("+", "%20"), null);
+        String url = uri.toASCIIString();
         Request request = new Request.Builder()
                 .url(url)
                 .build();
 
         try {
             Response response = client.newCall(request).execute();
-            String jsonData = response.body().string();
+            if (response.body() != null) {
+                String jsonData = response.body().string();
 
-            try {
-                JSONObject jsonObject = new JSONObject(jsonData);
-                JSONArray features = jsonObject.getJSONArray("features");
+                try {
+                    JSONObject jsonObject = new JSONObject(jsonData);
+                    JSONArray features = jsonObject.getJSONArray("features");
 
-                if (features.length() == 0) {
-                    model.addAttribute("message", "No earthquake data found for " + city);
-                    return "message";
-                } else {
-                    model.addAttribute("city", city);
-                    model.addAttribute("features", features);
-                    return "earthquake";
+                    if (features.length() == 0) {
+                        model.addAttribute("message", "No earthquake data found for " + city);
+                        return "message";
+                    } else {
+                        model.addAttribute("city", city);
+                        model.addAttribute("features", features);
+                        return "index";
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    return "error";
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return "error";
+            } else {
+                model.addAttribute("message", "No response from server");
+                return "message";
             }
         } catch (IOException e) {
             e.printStackTrace();
             return "error";
         }
-    }
+}
+    
 }
