@@ -39,8 +39,7 @@ public class EarthquakeController {
     @PostMapping("/index")
     public String getEarthquakeData(@RequestParam String city, Model model) throws URISyntaxException {
         OkHttpClient client = new OkHttpClient();
-
-        URI uri = new URI("http", "earthquake.usgs.gov", "/fdsnws/event/1/query",
+        URI uri = new URI("https", "earthquake.usgs.gov", "/fdsnws/event/1/query",
                 "format=geojson&minmagnitude=5&limit=5&orderby=time&eventtype=earthquake&place=" + 
                 URLEncoder.encode(city, StandardCharsets.UTF_8).replace("+", "%20"), null);
         String url = uri.toASCIIString();
