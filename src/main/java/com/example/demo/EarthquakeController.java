@@ -18,7 +18,10 @@ import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+
+
 @Controller
+
 public class EarthquakeController {
 
     /**
@@ -29,19 +32,18 @@ public class EarthquakeController {
      * @return the name of the HTML template to render
      */
 
-
-
     @GetMapping("/index")
     public String index() {
         return "index";
     }
-	
-    @PostMapping("/index")
+
+    @GetMapping(value="/index/{id}", headers={"content-type=text/json"})
+    @PostMapping(value="/index/{id}", headers={"content-type=text/json"})
     public String getEarthquakeData(@RequestParam String city, Model model) throws URISyntaxException {
         OkHttpClient client = new OkHttpClient();
         URI uri = new URI("https", "earthquake.usgs.gov", "/fdsnws/event/1/query",
-                "format=geojson&minmagnitude=5&limit=5&orderby=time&eventtype=earthquake&place=" + 
-                URLEncoder.encode(city, StandardCharsets.UTF_8).replace("+", "%20"), null);
+                "format=geojson&minmagnitude=5&limit=5&orderby=time&eventtype=earthquake&place=" +
+                        URLEncoder.encode(city, StandardCharsets.UTF_8).replace("+", "%20"), null);
         String url = uri.toASCIIString();
         Request request = new Request.Builder()
                 .url(url)
@@ -76,6 +78,5 @@ public class EarthquakeController {
             e.printStackTrace();
             return "error";
         }
-}
-    
+    }
 }
