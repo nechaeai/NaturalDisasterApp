@@ -1,27 +1,24 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
+
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Earthquake Data</title>
+   <meta charset="ISO-8859-1">
+   <title>Earthquake Data</title>
 </head>
-<body>
-    <h1>Earthquake Data for "${city}"</h1>
-    <form method="post" action="/earthquake">
-        <label for="city">Enter city name:</label>
-        <input type="text" id="city" name="city">
-        <button type="submit">Search</button>
-    </form>
-    <table>
-        <tr>
-            <th>Place</th>
-            <th>Magnitude</th>
-            <th>Time</th>
-        </tr>
-        <tr th:each="feature : ${features}">
-            <td th:text="${feature['properties']['place']}"></td>
-            <td th:text="${feature['properties']['mag']}"></td>
-            <td th:text="${feature['properties']['time']}"></td>
-        </tr>
-    </table>
-</body>
+ <body>
+   <form id="form" method="GET" action="http://localhost:8080/earthquakedata">
+       <label for="city">Enter city name:</label>
+       <input id="city" type="text" name="city">
+       <label for="orderby">Order By :</label>
+		<select name="orderby" id="orderby">
+ 			<option value="time">time</option>
+ 			<option value="time-asc">time-asc</option>
+ 			<option value="magnitude">magnitude</option>
+ 			<option value="magnitude-asc">magnitude-asc</option>
+		</select>
+       <input id="search-btn" type="submit" value="Submit">
+   </form>
+ </body>
 </html>
+
+

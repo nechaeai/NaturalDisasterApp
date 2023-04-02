@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+   <meta charset="ISO-8859-1">
+   <title>Earthquake Data</title>
+</head>
+<body>
+   <h1>Earthquake Data for "${city}"</h1>
+   <form method="post" action="/earthquake">
+       <label for="city">Enter city name:</label>
+       <input type="text" id="city" name="city">
+       <button type="submit">Search</button>
+   </form>
+   <table>
+       <tr>
+           <th>Place</th>
+           <th>Magnitude</th>
+           <th>Time</th>
+       </tr>
+       <tr th:each="feature : ${features}">
+           <td th:text="${feature['properties']['place']}"></td>
+           <td th:text="${feature['properties']['mag']}"></td>
+           <td th:text="${feature['properties']['time']}"></td>
+       </tr>
+   </table>
+</body>
+</html>
+
+
+
+
+
+
