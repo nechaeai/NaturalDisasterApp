@@ -29,11 +29,13 @@ public class EarthquakeController {
      * @param model the model to populate with the earthquake data
      * @return the name of the HTML template to render
      */
+	@GetMapping("/")
+	   public ModelAndView index() {
+	       ModelAndView modelAndView = new ModelAndView();
+	       modelAndView.setViewName("index.html");
+	       return modelAndView;
+	   }
 
-	 @GetMapping("/index")
-	    public String index() {
-	        return "index";
-	    }
 
     @GetMapping("/earthquakedata")
     public String getEarthquakeData(@RequestParam("city") String city,@RequestParam("orderby") String orderBy) throws URISyntaxException {
