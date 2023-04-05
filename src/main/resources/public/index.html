@@ -1,24 +1,77 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-   <meta charset="ISO-8859-1">
-   <title>Earthquake Data</title>
+	<meta charset="UTF-8">
+	<title>Earthquake Data</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f2f2f2;
+		}
+		form {
+			margin: 20px auto;
+			max-width: 600px;
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 5px;
+			box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+			text-align: center;
+		}
+		label {
+			display: inline-block;
+			width: 150px;
+			margin-bottom: 10px;
+			font-weight: bold;
+			text-align: right;
+			padding-right: 10px;
+		}
+		input[type=text] {
+			padding: 5px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			box-sizing: border-box;
+			margin-bottom: 20px;
+			width: 60%;
+			min-width: 200px;
+		}
+		select {
+			padding: 5px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			box-sizing: border-box;
+			margin-bottom: 20px;
+			width: 60%;
+			min-width: 200px;
+		}
+		input[type=submit] {
+			background-color: #4CAF50;
+			color: white;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 16px;
+		}
+		input[type=submit]:hover {
+			background-color: #45a049;
+		}
+	</style>
 </head>
- <body>
-   <form id="form" method="GET" action="http://localhost:8080/earthquakedata">
-       <label for="city">Enter city name:</label>
-       <input id="city" type="text" name="city">
-       <label for="orderby">Order By :</label>
+<body>
+	<form id="form" method="GET" action="http://localhost:8080/earthquakedata">
+		<h1>Earthquake Data</h1>
+		<label for="city">Enter city name:</label>
+		<input id="city" type="text" name="city">
+		<br>
+		<label for="orderby">Order By:</label>
 		<select name="orderby" id="orderby">
- 			<option value="time">time</option>
- 			<option value="time-asc">time-asc</option>
- 			<option value="magnitude">magnitude</option>
- 			<option value="magnitude-asc">magnitude-asc</option>
+			<option value="time">Time (newest first)</option>
+			<option value="time-asc">Time (oldest first)</option>
+			<option value="magnitude">Magnitude (highest first)</option>
+			<option value="magnitude-asc">Magnitude (lowest first)</option>
 		</select>
-       <input id="search-btn" type="submit" value="Submit">
-   </form>
- </body>
+		<br>
+		<input id="search-btn" type="submit" value="Submit">
+	</form>
+</body>
 </html>
-
-
